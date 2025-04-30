@@ -1,9 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
+import authroutes from './routes/authroutes.ts'
 const app = express()
-app.use("/api/auth")
-app.use("/api/messages")
+
+app.use("/api/auth",authroutes)
+
+// app.use("/api/messages")
 app.use(express.json()) // to parse json data
 app.get('/',(req,res)=>{
     res.send("yash shiva")
