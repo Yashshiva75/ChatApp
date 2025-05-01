@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import {Response} from 'express'
 import 'dotenv/config'
 
-export const generateToken = (userid:String,res:Response)=>{
+export const generateToken = (userid:String | undefined,res:Response)=>{
         const token = jwt.sign({userid},process.env.JWT_SECRET!,{
             expiresIn:"15d"
         })
