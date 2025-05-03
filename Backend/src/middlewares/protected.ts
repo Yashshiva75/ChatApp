@@ -10,7 +10,7 @@ declare global {
     namespace Express {
         export interface Request{
             user:{
-                id:String
+                id:string
             }
         }
     }
