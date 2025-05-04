@@ -8,7 +8,7 @@ export const sendMessage = async(req:Request,res:Response):Promise<any>=>{
     const {message} = req.body
     const {id:recieverId} = req.params
     const senderId = req.user.id
-
+    
     let conversation = await prisma.conversation.findFirst({
         where:{
             participantIds:{
@@ -49,13 +49,15 @@ export const sendMessage = async(req:Request,res:Response):Promise<any>=>{
             }
         })
     }
+    return res.status(200).json({message:"Message sent successfully "})
     }catch(error){
       console.log("Error",error)
       return res.status(500).json("error in send msg api!")
     }
 }
 
-export const getMessage = async(req:Request,res:Response)=>{
+//Get message
+export const getMessage = async(req:Request,res:Response):Promise<any>=>{
     try{
 
         const {id:userToChatId} = req.params
@@ -84,4 +86,31 @@ export const getMessage = async(req:Request,res:Response)=>{
     }catch(error){
         return res.status(500).json({message:"Api Error found"})
     }
+}
+
+//Get Users
+
+export const getUsersforSidebar = async(req:Request,res:Response):Promise<any>=>{
+     try{
+
+        const me = req.user.id
+        const users = await prisma.user.findMany({
+            where:{
+                id:{
+                    not:me
+                }
+            },
+            select:{
+                id:true,
+                fullname:true,
+                profilepic:true
+            }
+        })
+       return res.status(200).json({
+        users:users
+       })
+     }catch(error){
+        console.log('Error',error)
+        return res.status(500).json('error in api')
+     }
 }

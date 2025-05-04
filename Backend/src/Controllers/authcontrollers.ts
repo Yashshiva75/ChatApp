@@ -3,9 +3,6 @@ import bcrypt from "bcryptjs"
 import prisma from "../db/prisma.js"
 import {Request,Response} from "express"
 import { generateToken } from "../utils/jwt/GenerateToken.js"
-import { promises } from "dns"
-
-
 
 export const signup = async(req:Request,res:Response): Promise<any> =>{
 

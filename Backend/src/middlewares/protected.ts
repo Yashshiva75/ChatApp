@@ -20,18 +20,17 @@ export const verifyToken = async(req:Request,res:Response,next:NextFunction):Pro
      try{
         const token = req.cookies?.jwt;
 
-
        if(!token){
         return res.status(400).json({message:"No token provided"})
        }
 
        const decoded = jwt.verify(token,process.env.JWT_SECRET!) as DecodedToken
-
+       console.log('decoded',decoded)
        if(!decoded){
         return res.status(400).json({message:"Unauthorized Access Haram ke pille tu he  kon?!"})
        }
 
-       const user = await prisma.user.findUnique({where:{id:decoded.userId.toString()},select:{id:true,username:true,
+       const user = await prisma.user.findUnique({where:{id:decoded?.userid?.toString()},select:{id:true,username:true,
         fullname:true,profilepic:true}})
 
         if(!user){
@@ -41,6 +40,7 @@ export const verifyToken = async(req:Request,res:Response,next:NextFunction):Pro
 
        next()
      }catch(error){
+        console.log('Error',error)
         return res.status(500).json({message:"Error in get me"})
      }
 }

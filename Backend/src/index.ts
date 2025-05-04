@@ -4,9 +4,9 @@ dotenv.config();
 import authroutes from './routes/authroutes.ts'
 import messageroutes from './routes/messageroute.ts'
 const app = express()
+import cookieparser from "cookie-parser"
 
-
-
+app.use(cookieparser())
 app.use(express.json()) // to parse json data
 app.use("/api/auth",authroutes)
 app.use("/api/messages",messageroutes)
